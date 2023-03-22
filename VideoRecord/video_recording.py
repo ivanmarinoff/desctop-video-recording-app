@@ -14,7 +14,7 @@ import webbrowser
 
 
 # Main function to record screen
-def record_screen_v():
+def record_screen():
     SCREEN_SIZE = tuple(pyautogui.size())
     # define the codec
     fourcc = cv2.VideoWriter_fourcc(*"XVID")
@@ -42,7 +42,7 @@ def record_screen_v():
 
 
 # This function start the recording
-def rec():
+def start_record():
     if ("__cache__" in os.listdir()):
         open("__cache__", "w").write("")
     else:
@@ -50,20 +50,20 @@ def rec():
     while (0 < 1):
         y = open("__cache__", "r").read()
         if (y == "do"):
-            record_screen_v()
+            record_screen()
         else:
             sleep(2)
 
 
 # function for releasing recorded video
-def main_l():
-    def releas():
+def main_releasing():
+    def releasing():
         t = save_as()
         l = "output.avi"
         if (t != None):
             t = t.name + ".avi"
             shutil.copy(l, t)
-            p3.place(x=150, y=1000)
+            button_3.place(x=150, y=1000)
             messagebox.showinfo("File saved", "Your file has been saved")
 
     # checking the presence of cache file in file system
@@ -79,16 +79,16 @@ def main_l():
     def play():
         open("__cache__", "w").write("do")
         open("cache", "w").write("")
-        p2.place(x=15, y=80)
-        p1.place(x=150, y=1000)
+        bitton_2.place(x=15, y=80)
+        button_1.place(x=150, y=1000)
 
     # For stop recording, this function writes "stop" in cache file, due to which the main.py file stop recording the screen
     def stop():
         open("__cache__", "w").write("")
         open("cache", "w").write("stop")
-        p1.place(x=15, y=80)
-        p3.place(x=15, y=170)
-        p2.place(x=150, y=1000)
+        button_1.place(x=15, y=80)
+        button_3.place(x=15, y=170)
+        bitton_2.place(x=150, y=1000)
 
     # Function to open browser
     def github():
@@ -111,22 +111,22 @@ def main_l():
         .place(x=10, y=0)
     Label(t, background="black", height=30, width=500, padx=5, pady=5).place(x=0, y=50)
     # photo = PhotoImage(file=r"C:\Users\Studio6\Documents\SoftUni\VideoRecord\record.png")
-    p1 = Button(t, text="Start recording", font=('Comic sans MS', 15), command=play, background="#BC0116",
+    button_1 = Button(t, text="Start recording", font=('Comic sans MS', 15), command=play, background="#BC0116",
+                      foreground="black", activebackground="white", activeforeground="black")
+    bitton_2 = Button(t, text="Stop recording", font=('Comic sans MS', 15), command=stop, background="#BC0116",
                 foreground="black", activebackground="white", activeforeground="black")
-    p2 = Button(t, text="Stop recording", font=('Comic sans MS', 15), command=stop, background="#BC0116",
-                foreground="black", activebackground="white", activeforeground="black")
-    p3 = Button(t, text="Release video", font=('Comic sans MS', 15), command=releas, background="#BC0116",
+    button_3 = Button(t, text="Release video", font=('Comic sans MS', 15), command=releasing, background="#BC0116",
                 foreground="black", activebackground="white", activeforeground="black")
     Button(t, text="By IvanMarinoff", font=('Comic sans MS', 13), command=github, background="grey", foreground="white",
            activebackground="white", activeforeground="black", padx=5, pady=5).place(x=10, y=230)
-    p1.place(x=15, y=80)
-    p2.place(x=1500, y=1000)
+    button_1.place(x=15, y=80)
+    bitton_2.place(x=1500, y=1000)
     t.mainloop()
 
 
 if __name__ == '__main__':
-    t = Process(target=main_l)
-    t2 = Process(target=rec)
+    t = Process(target=main_releasing)
+    t2 = Process(target=start_record)
     t.start()
     t2.start()
     t.join()
